@@ -1,4 +1,63 @@
 (() => {
+
+  const form = document.querySelector('form[name=bmi]');
+  
+  /**
+   * Getting the healt message based on the unit of bmi
+   * @param {type} unit BMI unit
+   * @returns {String}
+   */
+  const getHealthMessage = unit => {
+    let healthMessage;
+    if (unit < 18.5) {
+      healthMessage = 'considered underweight';
+    } else if (unit >= 18.5 && unit <= 25) {
+      healthMessage = 'a healthy weight';
+    } else if (unit > 25) {
+      healthMessage = 'considered overweight';
+    }
+    return healthMessage;
+  };
+
+  /**
+   * Calculate the BMI
+   * @param {type} weight
+   * @param {type} height
+   * @returns {Number}
+   */
+  const getBMI = (weight, height) => {
+    let newWeight = parseInt(weight, 10);
+    let newHeight = parseInt(height, 10);
+    return (newWeight / (newHeight /100 * newHeight / 100)).toFixed(1);
+  };
+
+  /**
+   * Main function
+   * @param {type} event
+   * @returns
+   */
+  const onSubmit = event => {
+
+    event.preventDefault();
+
+    const result = form.querySelector('.result');
+    const health = form.querySelector('.health');
+
+    const weight = form.querySelector('input[name=weight]').value;
+    const height = form.querySelector('input[name=height]').value;
+
+    const bmi = getBMI(weight, height);
+
+    result.innerHTML = bmi;
+    health.innerHTML = getHealthMessage(bmi);
+
+  };
+
+  form.addEventListener('submit', onSubmit, false);
+
+})();
+
+/*(() => {
     const form = document.querySelector('form[name=bmi]');
     const onSubmit = event => {
         // prevent the form actually submitting
@@ -38,3 +97,4 @@
 
     form.addEventListener('submit', onSubmit, false);
 })();
+*/
